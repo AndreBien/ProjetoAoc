@@ -11,7 +11,7 @@
 	
 	set_tela: #Inicia todos os valores para a tela
 		addi $t0, $zero, 65536 #65536 = (512*512)/4 pixels
-		add $t1, $t0, $zero #Adicionar a distribuiÃ§Ã£o de pixels ao endereco
+		add $t1, $t0, $zero #Adicionar a distribuiÃƒÂ§ÃƒÂ£o de pixels ao endereco
 		lui $t1, 0x1004 #Endereco base da tela no heap, pode mudar se quiser
 		jr $ra
 
@@ -69,73 +69,73 @@
 		
 	espera2:#Funcao para espera de 100 milisegundos
 		li $v0, 32 #Codigo do syscall para Sleep
-		li $a0, 100 10 #Parametro do tempo de espera em milisegundos
+		li $a0, 100 #Parametro do tempo de espera 100 em milisegundos
 		syscall
 		jr $ra
 	
 	
-	moveRobo: #Movimentacao do robo (em zigzag até em baixo e volta reto para cima) input: $t3=ponto do robo;
-		moveDir: #Começa movimentando para direita
+	moveRobo: #Movimentacao do robo (em zigzag atÃ© em baixo e volta reto para cima) input: $t3=ponto do robo;
+		moveDir: #ComeÃ§a movimentando para direita
 		jal verifica #Funcao verifica, verifica a linha branca esta proxima
-		addi $t5, $t3, 4 #Guarda em $t5 o endereço da direita do robo
+		addi $t5, $t3, 4 #Guarda em $t5 o endereÃ§o da direita do robo
 		lw $s1, ($t5) #Guarda a cor do proximo endereco
 		beq $s1, $s2, moveBaixo #Se for a cor da margem, move para baixo
-		sw $s6, ($t3) #Posicao atual é pintada de preto
+		sw $s6, ($t3) #Posicao atual Ã© pintada de preto
 		addi $t3, $t3, 4 #Posicao atual incrementada para a proxima posicao
-		sw $s5, ($t3) #Posicao atual pintada de laranja (assim é realizada a movimentacao do robo)
-		jal espera1 #Apos movimentação, faz-se um delay para o programa nao ir muito rapido
+		sw $s5, ($t3) #Posicao atual pintada de laranja (assim Ã© realizada a movimentacao do robo)
+		jal espera1 #Apos movimentaÃ§Ã£o, faz-se um delay para o programa nao ir muito rapido
 		b moveDir
 		
 		moveBaixo: #Na margem direita, faz uma movimentacao curta para baixo
 		addi $t0, $zero, 0 #$t0, contador
 		loopBaixo:
 		jal verifica #Funcao verifica, verifica a linha branca esta proxima
-		addi $t5, $t3, 512 #Guarda em $t5 o endereço abaixo do robo
+		addi $t5, $t3, 512 #Guarda em $t5 o endereÃ§o abaixo do robo
 		lw $s1, ($t5) #Guarda a cor do proximo endereco
 		beq $s1, $s2, moveCima #Se for a cor da margem, move para cima
-		sw $s6, ($t3) #Posicao atual é pintada de preto
+		sw $s6, ($t3) #Posicao atual Ã© pintada de preto
 		addi $t3, $t3, 512 #Posicao atual incrementada para a proxima posicao
 		sw $s5, ($t3) #Posicao atual pintada de laranja
-		jal espera1 #Apos movimentação, faz-se um delay para o programa nao ir muito rapido
+		jal espera1 #Apos movimentaÃ§Ã£o, faz-se um delay para o programa nao ir muito rapido
 		addi $t0, $t0, 1 #Incrementa contador
 		beq $t0, 20, moveEsq #Contador em 20, move para esquerda
 		b loopBaixo
 		
 		moveEsq: #Entao movimenta para esquerda
 		jal verifica#Funcao verifica, verifica a linha branca esta proxima
-		subi $t5, $t3, 4 #Guarda em $t5 o endereço da esquerda do robo
+		subi $t5, $t3, 4 #Guarda em $t5 o endereÃ§o da esquerda do robo
 		lw $s1, ($t5) #Guarda a cor do proximo endereco
 		beq $s1, $s2, moveBaixo2 #Se for a cor da margem, move para baixo
-		sw $s6, ($t3)#Posicao atual é pintada de preto
+		sw $s6, ($t3)#Posicao atual Ã© pintada de preto
 		subi $t3, $t3, 4 #Posicao atual incrementada para a proxima posicao
 		sw $s5, ($t3) #Posicao atual pintada de laranja
-		jal espera1 #Apos movimentação, faz-se um delay para o programa nao ir muito rapido
+		jal espera1 #Apos movimentaÃ§Ã£o, faz-se um delay para o programa nao ir muito rapido
 		b moveEsq
 		
-		moveBaixo2: #Na margem esquerda, faz uma movimentacao curta para baixo, e vai repetindo até aqui
+		moveBaixo2: #Na margem esquerda, faz uma movimentacao curta para baixo, e vai repetindo atÃ© aqui
 		addi $t0, $zero, 0 #$t0, contador
 		loopBaixo2:
 		jal verifica #Funcao verifica, verifica a linha branca esta proxima
-		addi $t5, $t3, 512 #Guarda em $t5 o endereço abaixo do robo
+		addi $t5, $t3, 512 #Guarda em $t5 o endereÃ§o abaixo do robo
 		lw $s1, ($t5) #Guarda a cor do proximo endereco
 		beq $s1, $s2, moveCima #Se for a cor da margem, move para cima
-		sw $s6, ($t3)#Posicao atual é pintada de preto
+		sw $s6, ($t3)#Posicao atual Ã© pintada de preto
 		addi $t3, $t3, 512 #Posicao atual incrementada para a proxima posicao
 		sw $s5, ($t3) #Posicao atual pintada de laranja
-		jal espera1 #Apos movimentação, faz-se um delay para o programa nao ir muito rapido
+		jal espera1 #Apos movimentaÃ§Ã£o, faz-se um delay para o programa nao ir muito rapido
 		addi $t0, $t0, 1 #Incrementa contador
 		beq $t0, 20, moveDir #Contador em 20, move para direita (por isso foram feitas duas funcoes de movimento para baixo)
 		b loopBaixo2
 		
-		moveCima: #Quando chega na margem inferior, volta diretamente para cima e recomeça o movimento
+		moveCima: #Quando chega na margem inferior, volta diretamente para cima e recomeÃ§a o movimento
 		jal verifica #Funcao verifica, verifica a linha branca esta proxima
-		subi $t5, $t3, 512 #Guarda em $t5 o endereço acima do robo
+		subi $t5, $t3, 512 #Guarda em $t5 o endereÃ§o acima do robo
 		lw $s1, ($t5) #Guarda a cor do proximo endereco
 		beq $s1, $s2, moveEsq #Se for a cor da margem, move para esquerda
-		sw $s6, ($t3)#Posicao atual é pintada de preto
+		sw $s6, ($t3)#Posicao atual Ã© pintada de preto
 		subi $t3, $t3, 512 #Posicao atual incrementada para a proxima posicao
 		sw $s5, ($t3) #Posicao atual pintada de laranja
-		jal espera1 #Apos movimentação, faz-se um delay para o programa nao ir muito rapido
+		jal espera1 #Apos movimentaÃ§Ã£o, faz-se um delay para o programa nao ir muito rapido
 		b moveCima
 		
 	verifica: #Verifica se a linha branca se encontra em alguma das posicoes ao redor do robo, priorizando a cruz
